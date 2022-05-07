@@ -1,7 +1,5 @@
 package com.okcoin.commons.okex.open.api.test.ws.spot.config;
 
-import sun.awt.windows.WPrintDialog;
-
 /**
  * config
  *

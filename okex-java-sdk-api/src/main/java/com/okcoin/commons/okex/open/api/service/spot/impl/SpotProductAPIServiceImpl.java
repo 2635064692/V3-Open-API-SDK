@@ -6,7 +6,6 @@ import com.okcoin.commons.okex.open.api.client.APIClient;
 import com.okcoin.commons.okex.open.api.config.APIConfiguration;
 import com.okcoin.commons.okex.open.api.service.spot.SpotProductAPIService;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -37,13 +36,13 @@ public class SpotProductAPIServiceImpl implements SpotProductAPIService {
 
     //公共-获取全部ticker信息
     @Override
-    public List<Ticker> getTickers() {
-        return this.client.executeSync(this.spotProductAPI.getTickers());
+    public CommonResponse<Ticker> getTickers() {
+        return this.client.executeSync(this.spotProductAPI.getTickers("SPOT"));
     }
 
     //公共-获取某个ticker信息
     @Override
-    public Ticker getTickerByInstrumentId(final String instrument_id) {
+    public CommonResponse<Ticker> getTickerByInstrumentId(final String instrument_id) {
         return this.client.executeSync(this.spotProductAPI.getTickerByInstrumentId(instrument_id));
     }
 
@@ -55,8 +54,8 @@ public class SpotProductAPIServiceImpl implements SpotProductAPIService {
 
     //公共-获取K线数据
     @Override
-    public JSONArray getCandlesByInstrumentId(final String instrument_id, final String start, final String end, final String granularity) {
-        return this.client.executeSync(this.spotProductAPI.getCandlesByInstrumentId(instrument_id,start, end, granularity));
+    public CommonArrayResponse getCandlesByInstrumentId(final String instrument_id, final String end, final String start, final String granularity,final String limit) {
+        return this.client.executeSync(this.spotProductAPI.getCandlesByInstrumentId(instrument_id,end,start,granularity,limit));
     }
 
     //公共-获取历史K线数据

@@ -7,7 +7,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface SpotProductAPI {
@@ -23,24 +22,32 @@ public interface SpotProductAPI {
                                           @Query("depth") String depth);
 
     //公共-获取全部ticker信息
-    @GET("/api/spot/v3/instruments/ticker")
-    Call<List<Ticker>> getTickers();
+    /**
+     * 产品类型
+     * SPOT：币币
+     * SWAP：永续合约
+     * FUTURES：交割合约
+     * OPTION：期权
+     */
+    @GET("/api/v5/market/tickers")
+    Call<CommonResponse<Ticker>> getTickers(@Query("instType") String instType);
 
     //公共-获取某个ticker信息
-    @GET("/api/spot/v3/instruments/{instrument_id}/ticker")
-    Call<Ticker> getTickerByInstrumentId(@Path("instrument_id") String instrument_id);
+    @GET("/api/v5/market/ticker")
+    Call<CommonResponse<Ticker>> getTickerByInstrumentId(@Query("instId") String instId);
 
     //公共-获取成交数据
-    @GET("/api/spot/v3/instruments/{instrument_id}/trades")
+    @GET("/api/v5/market/history-candles?instId={instrument_id}")
     Call<List<Trade>> getTradesByInstrumentId(@Path("instrument_id") String instrument_id,
                                 @Query("limit") String limit);
 
     //公共-获取K线数据
-    @GET("/api/spot/v3/instruments/{instrument_id}/candles")
-    Call<JSONArray> getCandlesByInstrumentId(@Path("instrument_id") String instrument_id,
-                               @Query("start") String start,
-                               @Query("end") String end,
-                               @Query("granularity") String granularity);
+    @GET("/api/v5/market/history-candles")
+    Call<CommonArrayResponse> getCandlesByInstrumentId(@Query("instId") String instrument_id,
+                                          @Query("after") String end,
+                                          @Query("before") String start,
+                                          @Query("bar") String bar,
+                                          @Query("limit") String limit);
 
     //公共-获取历史K线数据
     @GET("/api/spot/v3/instruments/{instrument_id}/history/candles")

@@ -50,8 +50,11 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
      */
     @Test
     public void getTickers() {
-        List<Ticker> tickers = this.spotProductAPIService.getTickers();
-        this.toResultString(SpotProductAPITest.LOG, "tickers", tickers);
+        CommonResponse<Ticker> tickers = this.spotProductAPIService.getTickers();
+        if (!tickers.isOk()){
+            System.out.println("error:" + tickers.getMsg());
+        }
+        this.toResultString(SpotProductAPITest.LOG, "tickers", tickers.getResult());
 
     }
 
@@ -61,8 +64,8 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
      */
     @Test
     public void getTickerByInstrumentId() {
-        final Ticker ticker = this.spotProductAPIService.getTickerByInstrumentId("LTC-USDT");
-        this.toResultString(SpotProductAPITest.LOG, "ticker", ticker);
+        final CommonResponse<Ticker> ticker = this.spotProductAPIService.getTickerByInstrumentId("BTC-USD-SWAP");
+        this.toResultString(SpotProductAPITest.LOG, "ticker", ticker.getResult());
     }
 
     /**
@@ -82,12 +85,17 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
     @Test
     public void getCandlesByInstrumentId() {
 
-//        String start = "2021-03-04T07:57:23.678Z";
-//        String end = "2021-03-05T07:57:23.678Z";
-        String start = null;
-        String end = null;
-        final JSONArray klines = this.spotProductAPIService.getCandlesByInstrumentId("BTC-USDT", start, end, "300");
-        this.toResultString(SpotProductAPITest.LOG, "klines", klines);
+        String start = "1651369470000";
+        String end = "1651542270000";
+//        String start = null;
+//        String end = null;
+        final CommonArrayResponse klines = this.spotProductAPIService.getCandlesByInstrumentId("BTC-USDT", end, start, "5m","10");
+        try {
+            List<CandlesHistoryVO> arrayData = klines.getArrayData(CandlesHistoryVO.class);
+            this.toResultString(SpotProductAPITest.LOG, "klines", arrayData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
