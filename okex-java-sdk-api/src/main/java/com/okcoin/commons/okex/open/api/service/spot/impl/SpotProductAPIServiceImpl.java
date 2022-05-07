@@ -6,6 +6,7 @@ import com.okcoin.commons.okex.open.api.client.APIClient;
 import com.okcoin.commons.okex.open.api.config.APIConfiguration;
 import com.okcoin.commons.okex.open.api.service.spot.SpotProductAPIService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -36,14 +37,22 @@ public class SpotProductAPIServiceImpl implements SpotProductAPIService {
 
     //公共-获取全部ticker信息
     @Override
-    public CommonResponse<Ticker> getTickers() {
-        return this.client.executeSync(this.spotProductAPI.getTickers("SPOT"));
+    public List<Ticker> getTickers() {
+        CommonResponse<Ticker> spot = this.client.executeSync(this.spotProductAPI.getTickers("SPOT"));
+        if (!spot.isOk()){
+            return null;
+        }
+        return spot.getData();
     }
 
     //公共-获取某个ticker信息
     @Override
-    public CommonResponse<Ticker> getTickerByInstrumentId(final String instrument_id) {
-        return this.client.executeSync(this.spotProductAPI.getTickerByInstrumentId(instrument_id));
+    public List<Ticker> getTickerByInstrumentId(final String instrument_id) {
+        CommonResponse<Ticker> tickerCommonResponse = this.client.executeSync(this.spotProductAPI.getTickerByInstrumentId(instrument_id));
+        if (!tickerCommonResponse.isOk()){
+            return null;
+        }
+        return tickerCommonResponse.getData();
     }
 
     //公共-获取成交数据
@@ -54,8 +63,12 @@ public class SpotProductAPIServiceImpl implements SpotProductAPIService {
 
     //公共-获取K线数据
     @Override
-    public CommonArrayResponse getCandlesByInstrumentId(final String instrument_id, final String end, final String start, final String granularity,final String limit) {
-        return this.client.executeSync(this.spotProductAPI.getCandlesByInstrumentId(instrument_id,end,start,granularity,limit));
+    public List<CandlesHistoryVO> getCandlesByInstrumentId(final String instrument_id, final String end, final String start, final String granularity, final String limit) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        CommonArrayResponse commonArrayResponse = this.client.executeSync(this.spotProductAPI.getCandlesByInstrumentId(instrument_id, end, start, granularity, limit));
+        if (!commonArrayResponse.isOk()){
+            return null;
+        }
+        return commonArrayResponse.getArrayData(CandlesHistoryVO.class);
     }
 
     //公共-获取历史K线数据

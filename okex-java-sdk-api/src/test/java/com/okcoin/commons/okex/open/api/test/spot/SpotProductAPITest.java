@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class SpotProductAPITest extends SpotAPIBaseTests {
@@ -50,11 +51,8 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
      */
     @Test
     public void getTickers() {
-        CommonResponse<Ticker> tickers = this.spotProductAPIService.getTickers();
-        if (!tickers.isOk()){
-            System.out.println("error:" + tickers.getMsg());
-        }
-        this.toResultString(SpotProductAPITest.LOG, "tickers", tickers.getResult());
+        List<Ticker> tickers = this.spotProductAPIService.getTickers();
+        this.toResultString(SpotProductAPITest.LOG, "tickers", tickers);
 
     }
 
@@ -64,8 +62,8 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
      */
     @Test
     public void getTickerByInstrumentId() {
-        final CommonResponse<Ticker> ticker = this.spotProductAPIService.getTickerByInstrumentId("BTC-USD-SWAP");
-        this.toResultString(SpotProductAPITest.LOG, "ticker", ticker.getResult());
+        final List<Ticker> ticker = this.spotProductAPIService.getTickerByInstrumentId("BTC-USD-SWAP");
+        this.toResultString(SpotProductAPITest.LOG, "ticker", ticker);
     }
 
     /**
@@ -83,19 +81,14 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
      * GET /api/spot/v3/instruments/<instrument_id>/candles
      */
     @Test
-    public void getCandlesByInstrumentId() {
+    public void getCandlesByInstrumentId() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
         String start = "1651369470000";
         String end = "1651542270000";
 //        String start = null;
 //        String end = null;
-        final CommonArrayResponse klines = this.spotProductAPIService.getCandlesByInstrumentId("BTC-USDT", end, start, "5m","10");
-        try {
-            List<CandlesHistoryVO> arrayData = klines.getArrayData(CandlesHistoryVO.class);
-            this.toResultString(SpotProductAPITest.LOG, "klines", arrayData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        final List<CandlesHistoryVO> klines = this.spotProductAPIService.getCandlesByInstrumentId("BTC-USDT", end, start, "5m","10");
+        this.toResultString(SpotProductAPITest.LOG, "klines", klines);
     }
 
 
