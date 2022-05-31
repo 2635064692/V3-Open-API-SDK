@@ -1,6 +1,6 @@
 package com.okcoin.commons.okex.open.api.test.spot;
 
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSON;
 import com.okcoin.commons.okex.open.api.bean.spot.result.*;
 import com.okcoin.commons.okex.open.api.service.spot.SpotProductAPIService;
 import com.okcoin.commons.okex.open.api.service.spot.impl.SpotProductAPIServiceImpl;
@@ -52,8 +52,8 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
     @Test
     public void getTickers() {
         List<Ticker> tickers = this.spotProductAPIService.getTickers();
-        this.toResultString(SpotProductAPITest.LOG, "tickers", tickers);
 
+        System.out.println(JSON.toJSONString(tickers));
     }
 
     /**
@@ -62,7 +62,7 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
      */
     @Test
     public void getTickerByInstrumentId() {
-        final List<Ticker> ticker = this.spotProductAPIService.getTickerByInstrumentId("BTC-USD-SWAP");
+        final List<Ticker> ticker = this.spotProductAPIService.getTickerByInstrumentId("GALA-USDT");
         this.toResultString(SpotProductAPITest.LOG, "ticker", ticker);
     }
 
@@ -83,11 +83,11 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
     @Test
     public void getCandlesByInstrumentId() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
-        String start = "1651369470000";
-        String end = "1651542270000";
+        String start = "1653957164000";
+        String end = "1653961124000";
 //        String start = null;
 //        String end = null;
-        final List<CandlesHistoryVO> klines = this.spotProductAPIService.getCandlesByInstrumentId("BTC-USDT", end, start, "5m","10");
+        final List<CandlesHistoryVO> klines = this.spotProductAPIService.getCandlesByInstrumentId("GALA-USDT", end, start, "30m","300");
         this.toResultString(SpotProductAPITest.LOG, "klines", klines);
     }
 
@@ -97,12 +97,12 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
      * GET /api/spot/v3/instruments/<instrument_id>/history/candles
      */
     @Test
-    public void getHistoryCandlesByInstrumentId() {
+    public void getHistoryCandlesByInstrumentId() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
             String start = "2020-04-26T14:14:00.000Z";
             String end = "2020-04-25T14:13:00.000Z";
 //        String start = null;
 //        String end = null;
-            final JSONArray klines = this.spotProductAPIService.getHistoryCandlesByInstrumentId("BTC-USDT", start, end, "900", null);
+            final List<CandlesHistoryVO> klines = this.spotProductAPIService.getHistoryCandlesByInstrumentId("BTC-USDT", start, end, "900", null);
             this.toResultString(SpotProductAPITest.LOG, "HistoryCandles", klines);
     }
 

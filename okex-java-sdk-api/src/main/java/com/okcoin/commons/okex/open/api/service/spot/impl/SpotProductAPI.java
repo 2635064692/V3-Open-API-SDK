@@ -1,6 +1,5 @@
 package com.okcoin.commons.okex.open.api.service.spot.impl;
 
-import com.alibaba.fastjson.JSONArray;
 import com.okcoin.commons.okex.open.api.bean.spot.result.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -42,7 +41,7 @@ public interface SpotProductAPI {
                                 @Query("limit") String limit);
 
     //公共-获取K线数据
-    @GET("/api/v5/market/history-candles")
+    @GET("/api/v5/market/candles")
     Call<CommonArrayResponse> getCandlesByInstrumentId(@Query("instId") String instrument_id,
                                           @Query("after") String end,
                                           @Query("before") String start,
@@ -50,11 +49,11 @@ public interface SpotProductAPI {
                                           @Query("limit") String limit);
 
     //公共-获取历史K线数据
-    @GET("/api/spot/v3/instruments/{instrument_id}/history/candles")
-    Call<JSONArray> getHistoryCandlesByInstrumentId(@Path("instrument_id") String instrument_id,
-                                      @Query("start") String start,
-                                      @Query("end") String end,
-                                      @Query("granularity") String granularity,
-                                      @Query("limit") String limit);
+    @GET("/api/v5/market/history-candles")
+    Call<CommonArrayResponse> getHistoryCandlesByInstrumentId(@Query("instId") String instrument_id,
+                                                    @Query("after") String end,
+                                                    @Query("before") String start,
+                                                    @Query("bar") String bar,
+                                                    @Query("limit") String limit);
 
 }

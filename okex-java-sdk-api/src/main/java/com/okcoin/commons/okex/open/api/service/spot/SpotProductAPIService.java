@@ -1,6 +1,5 @@
 package com.okcoin.commons.okex.open.api.service.spot;
 
-import com.alibaba.fastjson.JSONArray;
 import com.okcoin.commons.okex.open.api.bean.spot.result.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,6 +26,6 @@ public interface SpotProductAPIService {
     List<CandlesHistoryVO> getCandlesByInstrumentId(final String instrument_id, final String end, final String start, final String granularity, final String limit) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
 
     //公共-获取历史K线数据
-    JSONArray getHistoryCandlesByInstrumentId(String instrument_id, String start, String end, String granularity, String limit);
+    List<CandlesHistoryVO> getHistoryCandlesByInstrumentId(String instrument_id, String start, String end, String granularity, String limit) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
 
 }

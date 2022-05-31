@@ -1,6 +1,5 @@
 package com.okcoin.commons.okex.open.api.service.spot.impl;
 
-import com.alibaba.fastjson.JSONArray;
 import com.okcoin.commons.okex.open.api.bean.spot.result.*;
 import com.okcoin.commons.okex.open.api.client.APIClient;
 import com.okcoin.commons.okex.open.api.config.APIConfiguration;
@@ -73,8 +72,12 @@ public class SpotProductAPIServiceImpl implements SpotProductAPIService {
 
     //公共-获取历史K线数据
     @Override
-    public JSONArray getHistoryCandlesByInstrumentId(String instrument_id, String start, String end, String granularity, String limit) {
-        return this.client.executeSync(this.spotProductAPI.getHistoryCandlesByInstrumentId(instrument_id, start, end, granularity, limit));
+    public List<CandlesHistoryVO> getHistoryCandlesByInstrumentId(String instrument_id, String start, String end, String granularity, String limit) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        CommonArrayResponse commonArrayResponse = this.client.executeSync(this.spotProductAPI.getHistoryCandlesByInstrumentId(instrument_id, start, end, granularity, limit));
+        if (!commonArrayResponse.isOk()){
+            return null;
+        }
+        return commonArrayResponse.getArrayData(CandlesHistoryVO.class);
     }
 
 }
