@@ -24,8 +24,8 @@ public class CommonArrayResponse extends CommonResponse<JSONArray>{
 
         List<T> results = new ArrayList<>();
         for (JSONArray item : data) {
-            Object[] values = new Object[item.size()];
-            for (int i = 0; i < item.size(); i++) {
+            Object[] values = new Object[classes.length];
+            for (int i = 0; i < classes.length; i++) {
                 values[i] = item.get(i);
             }
             T s = clazz.getConstructor(classes).newInstance(values);

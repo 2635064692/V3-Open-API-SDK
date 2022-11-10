@@ -84,10 +84,10 @@ public class SpotProductAPITest extends SpotAPIBaseTests {
     public void getCandlesByInstrumentId() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
         String start = "1653957164000";
-        String end = "1653961124000";
+        String end = "1653962514000";
 //        String start = null;
 //        String end = null;
-        final List<CandlesHistoryVO> klines = this.spotProductAPIService.getCandlesByInstrumentId("GALA-USDT", end, start, "30m","300");
+        final List<CandlesHistoryVO> klines = this.spotProductAPIService.getCandlesByInstrumentId("GALA-USDT", end, null, "30m","1");
         this.toResultString(SpotProductAPITest.LOG, "klines", klines);
     }
 
