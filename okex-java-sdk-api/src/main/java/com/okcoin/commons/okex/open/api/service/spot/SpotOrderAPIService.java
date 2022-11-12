@@ -1,6 +1,7 @@
 package com.okcoin.commons.okex.open.api.service.spot;
 
 import com.alibaba.fastjson.JSONObject;
+import com.okcoin.commons.okex.open.api.bean.order.OrderV5Param;
 import com.okcoin.commons.okex.open.api.bean.spot.param.*;
 import com.okcoin.commons.okex.open.api.bean.spot.result.*;
 import retrofit2.Call;
@@ -9,10 +10,10 @@ import retrofit2.http.Body;
 import java.util.List;
 import java.util.Map;
 
-public interface SpotOrderAPIServive {
+public interface SpotOrderAPIService {
 
     //下单
-    OrderResult addOrder(PlaceOrderParam order);
+    OrderResult addOrder(OrderV5Param order);
 
     //批量下单
     Map<String, List<OrderResult>> addOrders(List<PlaceOrderParam> order);

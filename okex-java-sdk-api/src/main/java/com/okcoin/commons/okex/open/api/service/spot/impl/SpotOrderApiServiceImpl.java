@@ -1,11 +1,12 @@
 package com.okcoin.commons.okex.open.api.service.spot.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.okcoin.commons.okex.open.api.bean.order.OrderV5Param;
 import com.okcoin.commons.okex.open.api.bean.spot.param.*;
 import com.okcoin.commons.okex.open.api.bean.spot.result.*;
 import com.okcoin.commons.okex.open.api.client.APIClient;
 import com.okcoin.commons.okex.open.api.config.APIConfiguration;
-import com.okcoin.commons.okex.open.api.service.spot.SpotOrderAPIServive;
+import com.okcoin.commons.okex.open.api.service.spot.SpotOrderAPIService;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Map;
 /**
  * 币币订单相关接口
  **/
-public class SpotOrderApiServiceImpl implements SpotOrderAPIServive {
+public class SpotOrderApiServiceImpl implements SpotOrderAPIService {
     private final APIClient client;
     private final SpotOrderAPI spotOrderAPI;
 
@@ -24,7 +25,7 @@ public class SpotOrderApiServiceImpl implements SpotOrderAPIServive {
 
     //下单
     @Override
-    public OrderResult addOrder(final PlaceOrderParam order) {
+    public OrderResult addOrder(final OrderV5Param order) {
         return this.client.executeSync(this.spotOrderAPI.addOrder(order));
     }
 
