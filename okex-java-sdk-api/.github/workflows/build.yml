@@ -1,0 +1,44 @@
+name: Build & Package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+      - self
+  pull_request:
+    branches:
+      - main
+      - master
+      - self
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: |
+          mvn clean install -DskipTests -q
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: okex-sdk-jar
+          path: |
+            target/okex-java-sdk-api-1.0.1.jar
+            target/okex-java-sdk-api-1.0.1-sources.jar
+          retention-days: 7
+
+      - name: Show JAR files
+        run: ls -lh target/*.jar
