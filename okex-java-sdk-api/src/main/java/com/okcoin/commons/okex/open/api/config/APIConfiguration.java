@@ -60,6 +60,17 @@ public class APIConfiguration {
      */
     private I18nEnum i18n;
 
+    /**
+     * HTTP proxy host. When both host and port are set, the SDK will use this proxy.
+     * When not set (null/empty), OkHttp falls back to JVM/ProxySelector defaults.
+     */
+    private String proxyHost;
+
+    /**
+     * HTTP proxy port. Only effective when proxyHost is also set.
+     */
+    private Integer proxyPort;
+
     public APIConfiguration() {
         this(null);
     }
@@ -156,5 +167,21 @@ public class APIConfiguration {
 
     public void setI18n(I18nEnum i18n) {
         this.i18n = i18n;
+    }
+
+    public String getProxyHost() {
+        return proxyHost;
+    }
+
+    public void setProxyHost(String proxyHost) {
+        this.proxyHost = proxyHost;
+    }
+
+    public Integer getProxyPort() {
+        return proxyPort;
+    }
+
+    public void setProxyPort(Integer proxyPort) {
+        this.proxyPort = proxyPort;
     }
 }

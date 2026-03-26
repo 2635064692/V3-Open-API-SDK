@@ -78,7 +78,13 @@ public class APIHttpClient {
             }
             return chain.proceed(request);
         });
-        clientBuilder.proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 10809)));
+        if (this.config.getProxyHost() != null && this.config.getProxyHost().length() > 0
+                && this.config.getProxyPort() != null) {
+            clientBuilder.proxy(new Proxy(
+                    Proxy.Type.HTTP,
+                    new InetSocketAddress(this.config.getProxyHost(), this.config.getProxyPort())
+            ));
+        }
         return clientBuilder.build();
     }
 
