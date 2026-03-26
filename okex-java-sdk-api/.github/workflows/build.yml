@@ -1,11 +1,16 @@
 name: Build & Package
 
 on:
+  workflow_dispatch:
   push:
     branches:
+      - main
+      - master
       - self
   pull_request:
     branches:
+      - main
+      - master
       - self
 
 jobs:
