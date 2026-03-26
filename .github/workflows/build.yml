@@ -16,6 +16,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: okex-java-sdk-api
 
     steps:
       - uses: actions/checkout@v4
@@ -36,8 +39,8 @@ jobs:
         with:
           name: okex-sdk-jar
           path: |
-            target/okex-java-sdk-api-1.0.1.jar
-            target/okex-java-sdk-api-1.0.1-sources.jar
+            okex-java-sdk-api/target/okex-java-sdk-api-1.0.1.jar
+            okex-java-sdk-api/target/okex-java-sdk-api-1.0.1-sources.jar
           retention-days: 7
 
       - name: Show JAR files
