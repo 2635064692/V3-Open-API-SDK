@@ -39,8 +39,7 @@ jobs:
         with:
           name: okex-sdk-jar
           path: |
-            okex-java-sdk-api/target/okex-java-sdk-api-1.0.1.jar
-            okex-java-sdk-api/target/okex-java-sdk-api-1.0.1-sources.jar
+            okex-java-sdk-api/target/*.jar
           retention-days: 7
 
       - name: Show JAR files
